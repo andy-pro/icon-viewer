@@ -8,14 +8,14 @@ export default {
   name: 'Icon sets',
   key: 'all',
   data: [
-    { name: 'FontAwesome', key: 'fa' },
-    { name: 'Github Octicons', key: 'go' },
-    { name: 'Ionicons', key: 'io' },
-    { name: 'Material Design Icons', key: 'md' },
-    { name: 'Typicons', key: 'ti' },
-    { name: 'All icons', key: 'all' },
+    { key: 'fa' },
+    { key: 'go' },
+    { key: 'io' },
+    { key: 'md' },
+    { key: 'ti' },
+    { key: 'all' },
   ],
-  iconData: {
+  svgs: {
     fa: require('./fa-index').default,
     go: require('./go-index').default,
     io: require('./io-index').default,

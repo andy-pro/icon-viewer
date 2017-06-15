@@ -3,7 +3,12 @@ import React from 'react';
 import { View } from './fela';
 
 class ListView extends React.Component {
-  static DataSource = function(methods) {
+  static DataSource = function({
+    rowHasChanged,
+    sectionHeaderHasChanged,
+    getSectionHeaderData,
+    getRowData,
+  }) {
     // rowHasChanged(prevRowData, nextRowData);
     // sectionHeaderHasChanged(prevSectionData, nextSectionData);
     // getSectionHeaderData(dataBlob, sectionID);
@@ -16,15 +21,17 @@ class ListView extends React.Component {
     // getRowData: (dataBlob, sectionId, rowId) => dataBlob[rowId]
 
     const props = {
-      _rowHasChanged: methods.rowHasChanged,
-      _getRowData: methods.getRowData,
-      _sectionHeaderHasChanged: methods.sectionHeaderHasChanged,
-      _getSectionHeaderData: methods.getSectionHeaderData,
+      _rowHasChanged: rowHasChanged,
+      _sectionHeaderHasChanged: sectionHeaderHasChanged,
+      _getSectionHeaderData: getSectionHeaderData,
+      _getRowData: getRowData,
     };
 
-    this.cloneWithRows = _dataBlob => ({
-      _dataBlob,
+    this.cloneWithRows = (_dataBlob, rowIdentities) => ({
       ...props,
+      _dataBlob,
+      rowIdentities,
+      cloneWithRows: this.cloneWithRows,
     });
 
     this.cloneWithRowsAndSections = (
@@ -32,10 +39,11 @@ class ListView extends React.Component {
       sectionIdentities,
       rowIdentities
     ) => ({
+      ...props,
       _dataBlob,
       sectionIdentities,
       rowIdentities,
-      ...props,
+      cloneWithRowsAndSections: this.cloneWithRowsAndSections,
     });
 
     /*
@@ -64,35 +72,43 @@ class ListView extends React.Component {
       _getSectionHeaderData,
     } = dataSource;
 
-    return sectionIdentities
-      ? <View style={contentContainerStyle}>
-          {sectionIdentities.map((sid, index) => {
-            let sectionData = _getSectionHeaderData(_dataBlob, sid);
-            let rows = rowIdentities[index];
-            return enableEmptySections || rows.length
-              ? <div key={sid}>
-                  {renderSectionHeader(sectionData, sid)}
-                  {rows.map(rid => {
-                    let rowData = _getRowData(_dataBlob, sid, rid);
-                    return (
-                      <div key={rid}>
-                        {renderRow(rowData, sid, rid)}
-                      </div>
-                    );
-                  })}
-                </div>
-              : null;
-          })}
-        </View>
-      : <View style={contentContainerStyle}>
-          {_dataBlob.map((item, index) => {
-            return (
-              <div key={item.id || index}>
-                {renderRow(item, index, index)}
-              </div>
-            );
-          })}
-        </View>;
+    return (
+      <View style={contentContainerStyle}>
+        {sectionIdentities
+          ? sectionIdentities.map((sid, index) => {
+              let sectionData = _getSectionHeaderData(_dataBlob, sid);
+              let rows = rowIdentities[index];
+              return enableEmptySections || rows.length
+                ? <div key={sid}>
+                    {renderSectionHeader(sectionData, sid)}
+                    {rows.map(rid => {
+                      let rowData = _getRowData(_dataBlob, sid, rid);
+                      return (
+                        <div key={rid}>
+                          {renderRow(rowData, sid, rid)}
+                        </div>
+                      );
+                    })}
+                  </div>
+                : null;
+            })
+          : rowIdentities
+            ? rowIdentities.map(id => {
+                return (
+                  <div key={id}>
+                    {renderRow(_dataBlob[id], null, id)}
+                  </div>
+                );
+              })
+            : _dataBlob.map((item, index) => {
+                return (
+                  <div key={item.id || index}>
+                    {renderRow(item, null, index)}
+                  </div>
+                );
+              })}
+      </View>
+    );
   }
 }
 

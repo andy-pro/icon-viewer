@@ -7,7 +7,6 @@ import Page from '../__components/Page';
 
 // Pages
 import HomePage from '../home/HomePage';
-// import IconsPage from '../icons/IconsPage';
 import IconsPage from '../icons/IconListPage';
 import AboutPage from '../about/AboutPage';
 

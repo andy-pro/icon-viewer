@@ -3,15 +3,16 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider as Redux } from 'react-redux';
 import { Provider as Fela } from 'react-fela';
+import LocalizedStrings from 'react-localization';
 // import localforage from 'localforage';
 
 import configureFela from '../common/__config/fela';
 import configureStore from '../common/__config/store';
 import initialState from '../common/initialState';
-import messages from './messages';
-
 import App from '../common/app/App';
 import os from '../common/os';
+
+const messages = new LocalizedStrings(require('../common/__messages'));
 
 /* platform dependencies */
 os.isBrowser = true;

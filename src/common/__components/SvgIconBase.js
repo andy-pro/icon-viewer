@@ -2,6 +2,7 @@ import React from 'react';
 import { Svg } from '../components';
 
 const SvgIcon = ({
+  svg,
   svgs,
   name,
   stroke,
@@ -13,7 +14,7 @@ const SvgIcon = ({
   fill = '#000',
 }) =>
   <Svg height={size || height} width={size || width} viewBox={viewBox}>
-    {React.cloneElement(svgs[name], {
+    {React.cloneElement(svg || svgs[name], {
       fill,
       stroke,
       strokeWidth,

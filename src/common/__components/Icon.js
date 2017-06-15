@@ -2,10 +2,10 @@ import React from 'react';
 import { TouchableOpacity, Text } from '../components';
 import { splitOnce } from '../__lib/utils';
 import SvgIconBase from './SvgIconBase';
-import data from '../data';
+import appData from '../data';
 import { mainCSS } from '../styles';
 
-let svgs = data.iconData;
+let { svgs } = appData;
 
 const Icon = ({ name, color, size = 32 }) => {
   // console.log('name', name, svgs[splitOnce(name, '-')[0]]);

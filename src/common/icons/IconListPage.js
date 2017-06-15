@@ -4,19 +4,22 @@ import { connect } from 'react-redux';
 import { View, Text, TextInput, ListView } from '../components';
 import SvgIconBase from '../__components/SvgIconBase';
 import { mainCSS, iconProps, iconsPageCSS as styles } from '../styles';
-import data from '../data';
+import appData from '../data';
 import os from '../os';
 
 class IconListPage extends React.Component {
   constructor(props) {
     super(props);
-    this.iconData = data.iconData;
+    this.ds = new ListView.DataSource({
+      rowHasChanged: (r1, r2) => r1 !== r2,
+    });
     this.state = this.init(props.match.params.name);
   }
 
   componentWillReceiveProps(nextProps) {
+    this.start = Date.now();
     let { name } = nextProps.match.params;
-    if (name !== this.props.match.params.name) {
+    if (name !== this.fontName) {
       if (os.isNative) {
         this.refs.listView.scrollTo({ y: 0 });
       } else {
@@ -35,7 +38,7 @@ class IconListPage extends React.Component {
 
   init = name => {
     let ph = 'placeholders.iconlist',
-      set = this.iconData,
+      set = appData.svgs,
       all = name === 'all';
     this.autoFocus = all;
     if (all) {
@@ -45,32 +48,33 @@ class IconListPage extends React.Component {
       set = set[name];
     }
     this.placeholder = os.messages[ph];
-    this.data = set;
+    this.set = set;
     this.fontName = name;
-    this.ds = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1 !== r2,
-    });
-    return this.setGlyphs();
+    return this.filterGlyphs();
   };
 
   handleSearchChange = e => {
     this.query = typeof e === 'object' ? e.target.value : e;
-    this.setState(this.setGlyphs());
+    this.setState(this.filterGlyphs());
   };
 
-  setGlyphs = () => {
-    let glyphs = this.getFilteredGlyphs(this.data, this.query);
-    return { dataSource: this.ds.cloneWithRows(glyphs) };
+  filterGlyphs = () => {
+    let query = this.query || '',
+      glyphs,
+      set = this.set;
+    if (this.fontName === 'all' && query.length < 3) {
+      glyphs = [];
+    } else {
+      query = query.toLowerCase();
+      glyphs = Object.keys(set)
+        .filter(
+          item => query === '' || item.toLowerCase().indexOf(query) !== -1
+        )
+        .sort();
+    }
+    let ds = (this.state && this.state.dataSource) || this.ds;
+    return { dataSource: ds.cloneWithRows(set, glyphs) };
   };
-
-  getFilteredGlyphs(set, query = '') {
-    if (this.fontName === 'all' && query.length < 3) return [];
-    query = query.toLowerCase();
-    return Object.keys(set)
-      .filter(item => query === '' || item.toLowerCase().indexOf(query) !== -1)
-      .sort()
-      .map(name => ({ name }));
-  }
 
   render() {
     let listSize,
@@ -88,18 +92,13 @@ class IconListPage extends React.Component {
     }
     // console.log('render', this.state.dataSource, this.data);
 
-    const renderItem = item =>
+    const renderItem = (item, sId, rId) =>
       <View style={styles.item}>
         <View style={styles.icon}>
-          <SvgIconBase
-            name={item.name}
-            svgs={this.data}
-            fill={fill}
-            size={size}
-          />
+          <SvgIconBase svg={item} fill={fill} size={size} />
         </View>
         <Text style={styles.name}>
-          {item.name}
+          {rId}
         </Text>
       </View>;
 

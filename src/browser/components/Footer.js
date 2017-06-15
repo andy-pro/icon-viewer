@@ -17,8 +17,8 @@ export default () =>
         style={mainCSS.f_link}
       />
       <Link
-        to="https://github.com/andy-pro"
-        message="andy-pro"
+        to="https://github.com/andy-pro/icon-viewer"
+        message="source"
         style={mainCSS.f_link}
       />
     </View>

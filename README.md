@@ -1,5 +1,31 @@
-This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
+# Icon Viewer
 
+This application allows a convenient way to view and search icons from the [React Icons](https://gorangajic.github.io/react-icons) project.
 
-react-native 0.43.4 require react@16.0.0-alpha.6
-react-router wants react 15.x.x, but 16.0.0-alpha.6 used;
+## Try running it:
+* [Online demo](https://andy-pro.github.io/icon-viewer/)
+* Download [IconViewer.apk](https://github.com/andy-pro/icon-viewer/raw/master/IconViewer.apk)
+
+## Code sharing
+
+The project demonstrates the possibility of maximum sharing of code between web and the React Native platforms. In fact, only `src/browser/Root.js` and `src/native/Root.js` differ, well, also, the code for some components and styles is different.
+
+The boilerplate is based on:
+
+* [Create React App](https://github.com/facebookincubator/create-react-app)
+* [React Native](https://github.com/facebook/react-native)
+* [Este](https://github.com/este/este)
+
+The stylization of the web components - [Fela](https://github.com/rofrischmann/fela). This approach allowed us to apply StyleSheets of the same structure.
+
+### Browser Tasks
+
+- `npm run browser` run web app in development mode
+- `npm run build` build web app for production
+- `npm run deploy` deploy to Github pages (pre-configure `git remote`)
+
+### React Native Tasks
+
+- `npm run android` install React Native Android application
+- `npm run native` start React Native application
+- `npm run apk` generating the release APK

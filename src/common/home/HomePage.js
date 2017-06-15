@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Link, SectionList } from '../components';
 import { colors, mainCSS } from '../styles';
 import data from '../data';
+import os from '../os';
 
 const HomePage = () => {
   const renderSectionHeader = ({ section }) =>
@@ -16,7 +17,7 @@ const HomePage = () => {
       to={`iconlist/${item.key}`}
       underlayColor={colors.touch}
       style={mainCSS.sectionItem}
-      message={item.name}
+      message={os.messages[`links.iconlist/${item.key}.title`]}
     />;
 
   return (
