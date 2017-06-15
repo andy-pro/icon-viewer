@@ -2,9 +2,9 @@
 
 This application allows a convenient way to view and search icons from the [React Icons](https://gorangajic.github.io/react-icons) project.
 
-## Try running it:
+## Try running it
 * [Online demo](https://andy-pro.github.io/icon-viewer/)
-* Download [IconViewer.apk](https://github.com/andy-pro/icon-viewer/raw/master/IconViewer.apk)
+* Download [Icon Viewer.apk](https://github.com/andy-pro/icon-viewer/raw/master/Icon%20Viewer.apk)
 
 ## Code sharing
 
@@ -22,7 +22,7 @@ The stylization of the web components - [Fela](https://github.com/rofrischmann/f
 
 - `npm run browser` run web app in development mode
 - `npm run build` build web app for production
-- `npm run deploy` deploy to Github pages (pre-configure `git remote`)
+- `npm run deploy` deploy to Github pages (configure `git remote` before this)
 
 ### React Native Tasks
 
