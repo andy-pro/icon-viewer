@@ -13,11 +13,9 @@ export const mainCSS = {
     position: 'relative',
     marginHorizontal: 'auto',
     maxWidth: 630,
-    // maxWidth: 330,
   },
   main: {
     marginHorizontal: opts.gaps,
-    // marginVertical: 60,
     paddingVertical: 60,
     minHeight: '100vh',
   },

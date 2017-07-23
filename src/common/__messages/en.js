@@ -1,6 +1,6 @@
 export default {
   'links.menu.home.title': 'Home',
-  'links.home.title': 'Icon explorer',
+  'links.home.title': 'Icon viewer',
   'links.iconlist/fa.title': 'Font Awesome',
   'links.iconlist/go.title': 'Github Octicons',
   'links.iconlist/io.title': 'Ionicons',

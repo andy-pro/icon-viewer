@@ -1,9 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { View, Text, TextInput, ListView } from '../components';
+import {
+  TouchableHighlight,
+  View,
+  Text,
+  TextInput,
+  ListView,
+  Alert,
+} from '../components';
 import SvgIconBase from '../__components/SvgIconBase';
-import { mainCSS, iconProps, iconsPageCSS as styles } from '../styles';
+import { iconColors, mainCSS, iconProps, iconsPageCSS as styles } from '../styles';
 import appData from '../data';
 import os from '../os';
 
@@ -67,13 +74,19 @@ class IconListPage extends React.Component {
     } else {
       query = query.toLowerCase();
       glyphs = Object.keys(set)
-        .filter(
-          item => query === '' || item.toLowerCase().indexOf(query) !== -1
-        )
+        .filter(item => query === '' || item.toLowerCase().indexOf(query) !== -1)
         .sort();
     }
     let ds = (this.state && this.state.dataSource) || this.ds;
     return { dataSource: ds.cloneWithRows(set, glyphs) };
+  };
+
+  onPress = e => {
+    // prettier-ignore
+    if (os.isBrowser) {
+      let d = e.currentTarget.children[0].children[0].children[0].children[0].getAttribute('d')
+      Alert.prompt('Press ctrl+c to copy', `<G><Path d="${d}" /></G>`)
+    }
   };
 
   render() {
@@ -93,18 +106,21 @@ class IconListPage extends React.Component {
     // console.log('render', this.state.dataSource, this.data);
 
     const renderItem = (item, sId, rId) =>
-      <View style={styles.item}>
+      <TouchableHighlight
+        style={styles.item}
+        underlayColor={iconColors.active}
+        onPress={this.onPress}
+      >
         <View style={styles.icon}>
           <SvgIconBase svg={item} fill={fill} size={size} />
         </View>
         <Text style={styles.name}>
           {rId}
         </Text>
-      </View>;
+      </TouchableHighlight>;
 
     return (
       <View style={styles.root}>
-
         <View style={mainCSS.row}>
           <TextInput
             placeholder={this.placeholder}
@@ -129,7 +145,6 @@ class IconListPage extends React.Component {
           pageSize={pageSize}
           ref="listView"
         />
-
       </View>
     );
   }

@@ -14,7 +14,7 @@ const HomePage = () => {
 
   const renderItem = ({ item }) =>
     <Link
-      to={`iconlist/${item.key}`}
+      to={`/iconlist/${item.key}`}
       underlayColor={colors.touch}
       style={mainCSS.sectionItem}
       message={os.messages[`links.iconlist/${item.key}.title`]}

@@ -39,27 +39,17 @@ export {
 } from './fela';
 
 export { View, View as Drawer };
-/*
+
 const Alert = {
   alert: (hdr, msg, btns) => {
     if (msg) hdr = hdr + '\n' + msg;
     if (!btns) alert(hdr);
     else if (confirm(hdr)) btns[1].onPress();
   },
+  prompt: (hdr, msg) => prompt(hdr, msg),
 };
-*/
 
 export {
-  // Text,
-  // View,
-  // Form,
-  // Button,
-  // TextInput,
-  // FileInput,
-  // TouchableHighlight,
-  // TouchableOpacity,
-  // ScrollView,
-  // Image,
   Footer,
   // Icon,
   FlatList,
@@ -76,7 +66,7 @@ export {
   // Checkbox,
   ListView,
   // IconLink,
-  // Alert,
+  Alert,
   // MenuLink,
   // Picker,
   // FormWrapper,

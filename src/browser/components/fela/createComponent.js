@@ -2,21 +2,31 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import transformStyle from './transformStyle';
 
+var clone = obj => {
+  var copy = {};
+  for (var i in obj) copy[i] = obj[i];
+  return copy;
+};
+
 function createComponent(type = 'div', passThroughProps = []) {
   var FelaComponent = function FelaComponent(
-    { children, className, id, style = {}, passThrough = [], ...ruleProps },
+    { children, className, id, style = {}, ...ruleProps },
     { renderer, theme = {} }
   ) {
-    // style = style || {};
-
-    // console.log('create component', type, 'theme:', theme, 'style:', style);
-
+    var cloned = false;
+    var setHover = prop => {
+      if (!cloned) {
+        style = clone(style);
+        cloned = true;
+      }
+      style[':hover'] = Object.assign({ cursor: 'pointer' }, style[':hover'], prop);
+    };
     if (style instanceof Array) style = Object.assign({}, ...style);
 
-    var componentProps = passThroughProps.reduce(function(output, prop) {
+    var componentProps = passThroughProps.reduce((output, prop) => {
       if (typeof prop === 'object') {
         Object.assign(output, prop);
-      } else {
+      } else if (ruleProps.hasOwnProperty(prop)) {
         switch (prop) {
           case 'enabled':
           case 'editable':
@@ -42,10 +52,10 @@ function createComponent(type = 'div', passThroughProps = []) {
             output.src = ruleProps.source;
             break;
           case 'underlayColor':
-            style[':hover'] = {
-              backgroundColor: ruleProps.underlayColor,
-              cursor: 'pointer',
-            };
+            setHover({ backgroundColor: ruleProps.underlayColor });
+            break;
+          case 'activeOpacity':
+            setHover({ opacity: ruleProps.activeOpacity });
             break;
           default:
             output[prop] = ruleProps[prop];

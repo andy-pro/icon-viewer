@@ -33,13 +33,14 @@ const IconButton = ({
     style={[
       mainCSS.button,
       {
+        opacity: 0.8,
         borderColor: backgroundColor,
         backgroundColor,
       },
       style,
     ]}
     onPress={onPress}
-    activeOpacity={0.8}
+    activeOpacity={1}
   >
     <Icon size={size * 1.7} color={color} name={name} />
     <Text style={{ fontSize: size, color, fontWeight: '600' }}>
