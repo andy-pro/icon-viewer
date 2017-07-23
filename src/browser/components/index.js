@@ -1,6 +1,5 @@
 /* browser components */
 import Helmet from 'react-helmet';
-import { Route, withRouter } from 'react-router-dom';
 
 import Footer from './Footer';
 // import Icon from './icons';
@@ -59,8 +58,6 @@ export {
   Helmet,
   // AppText,
   // TextContainer,
-  Route,
-  withRouter,
   // HeaderBar,
   // Match,
   // Checkbox,
@@ -74,3 +71,4 @@ export {
   // TwistedView,
   // DatePicker,
 };
+export { Route, Redirect, withRouter } from 'react-router-dom';

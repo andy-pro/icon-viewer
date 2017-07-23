@@ -4,8 +4,6 @@
 
 // export { Icon, IconButton, SvgIconBase };
 
-export { Route, withRouter } from 'react-router-native';
-
 // import HeaderBar from '../HeaderBar'
 // import Match from '../Match'
 // import Modal from './Modal'
@@ -34,3 +32,4 @@ export {
   Alert,
   Picker,
 } from 'react-native';
+export { Route, Redirect, withRouter } from 'react-router-native';
